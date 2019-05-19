@@ -44,22 +44,47 @@ namespace IssuesTrackingSystem.Controllers
             return issueItem;
         }
 
+
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<ActionResult<Issue>> PostIssueItem(Issue issue)
         {
+            _context.Issues.Add(issue);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetIssueItem), new { id = issue.Id }, issue);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> PutIssueItem(Guid id, Issue issue)
         {
+            if (id != issue.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(issue).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteIssueItem(Guid id)
         {
+            var issueItem = await _context.Issues.FindAsync(id);
+
+            if (issueItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.Issues.Remove(issueItem);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
