@@ -13,7 +13,7 @@ namespace IssuesTrackingSystem.Models
         public string UserPC { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public enum Priority { Low, Medium, High }
+        public Priority Priority { get; set; }
         public bool IsComplete { get; set; }
     }
 }
