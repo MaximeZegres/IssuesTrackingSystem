@@ -1,48 +1,22 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Title</th>
+            <th>User PC</th>
             <th>Description</th>
             <th>Priority</th>
             <th>Solved</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>I</td>
-            <td>yes</td>
+        <tr *ngFor="let issuesInfo of issuesData">
+          <td>{{issuesInfo.userPC}}</td>
+          <td>{{issuesInfo.title}}</td>
+          <td>{{issuesInfo.description}}</td>
+          <td>{{issuesInfo.priority}}</td>
+          <td>{{issuesInfo.isComplete}}</td>
+          <td><a href="#" (click)="editIssue(this)">Edit</a>
+            <a href="#" (click)="deleteIssue(this)">Delete</a></td>
         </tr>
-        <tr>
-            <td>5</td>
-            <td>5</td>
-            <td>101</td>
-            <td>V</td>
-            <td>no</td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td>A</td>
-            <td>1010</td>
-            <td>X</td>
-            <td>no</td>
-        </tr>
-        <tr>
-            <td>15</td>
-            <td>F</td>
-            <td>1111</td>
-            <td>XV</td>
-            <td>yes</td>
-        </tr>
-        <tr>
-            <td>15</td>
-            <td>F</td>
-            <td>1111</td>
-            <td>XV</td>
-            <td>yes</td>
-        </tr>
+
     </tbody>
 </table>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-grid-issues',
@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GridIssuesComponent implements OnInit {
 
-  constructor() { }
+  @Input() issuesData: Array<any>;
+
+  constructor() { 
+  }
 
   ngOnInit() {
   }
