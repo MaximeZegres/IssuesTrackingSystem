@@ -35,14 +35,12 @@ namespace IssuesTrackingSystem
             services.AddDbContext<IssueContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("IssueContextConnectionString")));
 
-            services.AddCors(options =>
+
+            services.AddCors(c =>
             {
-                options.AddPolicy(MyAllowSpecificOrigins,
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200");
-                });
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -71,7 +69,7 @@ namespace IssuesTrackingSystem
                 app.UseHsts();
             }
 
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseSwagger();
 
