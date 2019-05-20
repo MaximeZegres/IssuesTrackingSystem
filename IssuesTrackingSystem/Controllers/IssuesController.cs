@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IssuesTrackingSystem.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class IssuesController : ControllerBase
@@ -22,15 +23,21 @@ namespace IssuesTrackingSystem.Controllers
         }
 
 
-
-        // GET: api/<controller>
+        /// <summary>
+        /// Get all issues
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Issue>>> GetIssues()
         {
             return await _context.Issues.ToListAsync();
         }
 
-        // GET api/<controller>/5
+        /// <summary>
+        /// Get specific issue with id(Guid) parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Issue>> GetIssueItem(long id)
         {
@@ -44,8 +51,24 @@ namespace IssuesTrackingSystem.Controllers
             return issueItem;
         }
 
-
-        // POST api/<controller>
+        /// <summary>
+        /// Post a new issue
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /issues
+        ///     {
+        ///        "userPC": "Isabelle-PC",
+        ///        "title": "Broken mouse",
+        ///        "description": "The mouse is broken",
+        ///        "priority": 3,
+        ///        "isComplete": true
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="issue"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Issue>> PostIssueItem(Issue issue)
         {
@@ -55,7 +78,13 @@ namespace IssuesTrackingSystem.Controllers
             return CreatedAtAction(nameof(GetIssueItem), new { id = issue.Id }, issue);
         }
 
-        // PUT api/<controller>/5
+
+        /// <summary>
+        /// Update an issue with id(Guid) parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="issue"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutIssueItem(Guid id, Issue issue)
         {
@@ -70,7 +99,12 @@ namespace IssuesTrackingSystem.Controllers
             return NoContent();
         }
 
-        // DELETE api/<controller>/5
+
+        /// <summary>
+        /// Delete a specific issue with id(Guid) parameter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIssueItem(Guid id)
         {
