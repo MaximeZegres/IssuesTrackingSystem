@@ -25,6 +25,8 @@ namespace IssuesTrackingSystem
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -34,12 +36,16 @@ namespace IssuesTrackingSystem
                 (options => options.UseSqlServer(Configuration.GetConnectionString("IssueContextConnectionString")));
 
 
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            services.AddCors(options =>
             {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost.com/4200")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+            });
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -69,7 +75,7 @@ namespace IssuesTrackingSystem
                 app.UseHsts();
             }
 
-            app.UseCors("MyPolicy");
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseSwagger();
 
