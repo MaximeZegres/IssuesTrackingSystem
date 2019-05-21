@@ -41,7 +41,7 @@ namespace IssuesTrackingSystem
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost.com/4200")
+                    builder.WithOrigins("http://localhost:4200")
                                         .AllowAnyHeader()
                                         .AllowAnyMethod();
                 });
