@@ -61,7 +61,7 @@ namespace IssuesTrackingSystem
                 app.UseHsts();
             }
 
-            app.UseCorsMiddleware();
+            app.UseMiddleware(typeof(CorsMiddleware));
 
             app.UseSwagger();
 

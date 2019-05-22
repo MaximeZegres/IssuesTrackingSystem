@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace IssuesTrackingSystem
@@ -16,13 +17,20 @@ namespace IssuesTrackingSystem
             _next = next;
         }
 
-        public Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext httpContext)
         {
             httpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             httpContext.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
             httpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version, X-File-Name");
             httpContext.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
-            return _next(httpContext);
+
+            if (httpContext.Request.Method == "OPTIONS")
+            {
+                httpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+                await httpContext.Response.WriteAsync(string.Empty);
+            }
+
+            await _next(httpContext);
         }
     }
 
