@@ -34,8 +34,6 @@ namespace IssuesTrackingSystem
                 (options => options.UseSqlServer(Configuration.GetConnectionString("IssueContextConnectionString")));
 
 
-            services.AddCors();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
@@ -63,7 +61,7 @@ namespace IssuesTrackingSystem
                 app.UseHsts();
             }
 
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
+            app.UseCorsMiddleware();
 
             app.UseSwagger();
 
